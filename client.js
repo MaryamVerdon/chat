@@ -41,10 +41,20 @@ socketClient.on('<connected', (nickname) => {
   signin.hidden = true;
   let span = send.querySelector('span').innerHTML = nickname;
   send.hidden = false;
+  if(!toast.hidden)
+    toast.classList.add("hidden");
+
 });
 
-let divMsg = document.querySelector('div#display');
+let divDisplay = document.querySelector('div#display');
 socketClient.on('<notification', (content) => {
-  divMsg.innerHTML = content;
+  divDisplay.innerHTML = content;
+});
+
+let toast = document.querySelector("div.toast-error");
+socketClient.on('<error', (nickname) => {
+  toast.innerHTML = nickname;
+  toast.classList.remove("hidden");
+
 });
 

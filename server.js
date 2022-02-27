@@ -49,8 +49,14 @@ socketServer.on('connection', function (socket) {
         socket.emit('<connected', nickname);
         socketServer.emit('<notification', nickname + ' joined the discussion.');
       }
-      else {console.log('pseudo non disponile');} 
+      else {
+        //echec de connexion
+        socket.emit('<error', 'the nickname ' + nickname + ' is already used.')
+      } 
     });
+
+  
+  
         
 
 });
