@@ -37,7 +37,7 @@
     <div id="dialog">
       <form name="signin" class="mt-2">
         <div class="input-group">
-          <input name="nickname" type="text" class="form-input" placeholder="choose a nickname (16 characters max.)">
+          <input name="nickname" type="text" class="form-input" placeholder="choose a nickname (16 characters max.)" pattern="[A-Za-z0-9_.-]{1,16}">
           <input type="submit" class="btn btn-primary input-group-btn" value="join">
         </div>
       </form>
@@ -45,7 +45,7 @@
       <div class="toast toast-error mt-2 hidden">
       </div>
       
-      <form name="send" class="mt-2 hidden">
+      <form name="send" class="mt-2" hidden>
         <div class="input-group">
           <span class="input-group-addon hide-sm">raoul</span>
           <input name="message" type="text" class="form-input" placeholder="type your message here">

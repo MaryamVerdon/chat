@@ -19,6 +19,8 @@ app.use("/", express.static(__dirname));
  *
  */
 let socketServer = require('socket.io')(http);
+//stock les pseudo
+let registeredSockets = {};
 
 socketServer.on('connection', function (socket) {
   console.log('A new user is connected...');
@@ -39,4 +41,28 @@ socketServer.on('connection', function (socket) {
     // Pushes an event to the client related to the socket object
     socket.emit('hello', 'Hi ' + content + ', wassup mate?');
   });
+
+  //confirmation de connexion
+    socket.on('>signin', (nickname) => {
+      if (isAvailable(nickname)){
+        registeredSockets.nickname = nickname;
+        socket.emit('<connected', nickname);
+        socketServer.emit('<notification', nickname + ' joined the discussion.');
+      }
+      else {console.log('pseudo non disponile');} 
+    });
+        
+
 });
+
+function isAvailable(nickname){
+    let bool = true;
+    for(let i in registeredSockets){
+        if(registeredSockets[i] == nickname){
+            bool = false;
+            break;  
+        }
+    }
+    return bool;
+}
+
