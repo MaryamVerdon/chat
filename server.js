@@ -1,5 +1,6 @@
 var express = require('express');
 var app = express();
+var ent = require('ent');
 var http = require('http').Server(app);
 
 
@@ -58,7 +59,7 @@ socketServer.on('connection', function (socket) {
 
   //envoie/réception de messages
   socket.on('>message', (msg) => {
-    socketServer.emit('<message', {sender: registeredSockets.nickname , text: msg} );
+    socketServer.emit('<message', {sender: registeredSockets.nickname , text: ent.encode(msg)} );
   });
 
 
