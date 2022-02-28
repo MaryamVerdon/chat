@@ -19,11 +19,12 @@ app.use("/", express.static(__dirname));
  *
  */
 let socketServer = require('socket.io')(http);
-//stock les pseudo
-let registeredSockets = {};
+
 
 socketServer.on('connection', function (socket) {
   console.log('A new user is connected...');
+  //stock les pseudo
+  let registeredSockets = {};
 
   /*
    * Registers an event listener
@@ -55,13 +56,13 @@ socketServer.on('connection', function (socket) {
       } 
     });
 
-  
-  
-        
+  //envoie/réception de messages
+  socket.on('>message', (msg) => {
+    socketServer.emit('<message', {sender: registeredSockets.nickname , text: msg} );
+  });
 
-});
 
-function isAvailable(nickname){
+  function isAvailable(nickname){
     let bool = true;
     for(let i in registeredSockets){
         if(registeredSockets[i] == nickname){
@@ -70,5 +71,9 @@ function isAvailable(nickname){
         }
     }
     return bool;
-}
+  }
+  
+
+});
+
 
