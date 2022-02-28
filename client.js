@@ -81,4 +81,8 @@ socketClient.on('<message', (msg) => {
   
 });
 
+socketClient.on('<service-message', (message) => {
+  divDisplay.innerHTML += `<i class="text-gray">` + message.text + `</i><br>`;
+});
+
 

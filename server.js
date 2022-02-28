@@ -60,6 +60,17 @@ socketServer.on('connection', function (socket) {
   //envoie/réception de messages
   socket.on('>message', (msg) => {
     socketServer.emit('<message', {sender: registeredSockets.nickname , text: ent.encode(msg)} );
+
+  //deconnexion
+  socket.on('disconnect', () => {
+    var serviceMessage = {
+      text:  registeredSockets.nickname + " left the discussion."
+    };
+    socket.broadcast.emit('<service-message', serviceMessage);
+    delete registeredSockets.nickname;
+  });
+
+
   });
 
 
