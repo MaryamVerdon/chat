@@ -33,8 +33,8 @@
 </head>
 
 <body>
-  <div class="container">
-    <div id="dialog">
+  <div class="container columns">
+    <div id="dialog" class="column col-8 col-sm-12">
       <form name="signin" class="mt-2">
         <div class="input-group">
           <input name="nickname" type="text" class="form-input" placeholder="choose a nickname (16 characters max.)" pattern="[A-Za-z0-9_.-]{1,16}">
@@ -45,18 +45,41 @@
       <div class="toast toast-error mt-2 hidden">
       </div>
       
-      <form name="send" class="mt-2" hidden>
-        <div class="input-group">
-          <span class="input-group-addon hide-sm">raoul</span>
-          <input name="message" id="message" type="text" class="form-input" placeholder="type your message here">
-          <input type="submit" class="btn btn-primary input-group-btn" value="send">
-        </div>
-      </form>
+        
+        <form name="send" class="mt-2" hidden>
+          <div class="input-group"> 
+            <span class="input-group-addon hide-sm">raoul</span>
+            <input name="message" id="message" type="text" class="form-input" placeholder="type your message here">
+            <input type="submit" class="btn btn-primary input-group-btn" value="send">
+          </div>
+        </form>
 
-      <div id="display" class="bg-gray p-2 mt-2">
-      </div>
+        <div id="display" class="bg-gray p-2 mt-2"></div>
 
     </div>
+
+    <!-- Liste utilisateurs -->
+     <div class= "column col-3 col-sm-12"> 
+      <table class="table">
+        <thead>
+          <tr>
+            <th>No user connected</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>testtesttest</td>
+          </tr>
+          <tr>
+            <td>testtesttest</td>
+          </tr>
+          <tr>
+            <td>testtesttest</td>
+          </tr>
+        </tbody>
+      </table> 
+    </div>
+
   </div>
 
   <script src="/socket.io/socket.io.js"></script>

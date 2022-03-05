@@ -81,6 +81,7 @@ socketClient.on('<message', (msg) => {
   
 });
 
+//deconnexion
 socketClient.on('<service-message', (message) => {
   divDisplay.innerHTML += `<i class="text-gray">` + message.text + `</i><br>`;
 });

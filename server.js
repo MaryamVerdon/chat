@@ -25,6 +25,7 @@ let socketServer = require('socket.io')(http);
 socketServer.on('connection', function (socket) {
   console.log('A new user is connected...');
   //stock les pseudo
+  var users = [];
   let registeredSockets = {};
 
   /*
@@ -70,6 +71,7 @@ socketServer.on('connection', function (socket) {
     delete registeredSockets.nickname;
   });
 
+  //affichage des utilisateurs
 
   });
 
@@ -84,7 +86,8 @@ socketServer.on('connection', function (socket) {
     }
     return bool;
   }
-  
+
+
 
 });
 
