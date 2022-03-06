@@ -84,6 +84,18 @@ socketClient.on('<message', (msg) => {
 //deconnexion
 socketClient.on('<service-message', (message) => {
   divDisplay.innerHTML += `<i class="text-gray">` + message.text + `</i><br>`;
+  document.getElementById(message.name).remove();
 });
 
+//Liste des utilisateurs
 
+let header = document.querySelector("thead th");
+let listUsers = document.querySelector("tbody");
+socketClient.on('<newuser', (user) => {
+    header.innerHTML =" Users connected";
+        let createTr = document.createElement("tr");
+        let createTd = document.createElement("td");
+        createTr.id = user;
+        createTd.innerHTML= user;
+        listUsers.appendChild(createTr).appendChild(createTd);
+});

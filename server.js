@@ -21,12 +21,15 @@ app.use("/", express.static(__dirname));
  */
 let socketServer = require('socket.io')(http);
 
+//Liste des utilisateurs
+let users = [];
+
+
+  //stock les pseudo
+  let registeredSockets = {};
 
 socketServer.on('connection', function (socket) {
   console.log('A new user is connected...');
-  //stock les pseudo
-  var users = [];
-  let registeredSockets = {};
 
   /*
    * Registers an event listener
@@ -45,12 +48,18 @@ socketServer.on('connection', function (socket) {
     socket.emit('hello', 'Hi ' + content + ', wassup mate?');
   });
 
+  //liste users
+  for(let i in users){
+    socket.emit('<newuser', users[i]);
+  }
   //confirmation de connexion
     socket.on('>signin', (nickname) => {
       if (isAvailable(nickname)){
         registeredSockets.nickname = nickname;
         socket.emit('<connected', nickname);
         socketServer.emit('<notification', nickname + ' joined the discussion.');
+        users.push(registeredSockets.nickname);
+        socketServer.emit('<newuser', registeredSockets.nickname);
       }
       else {
         //echec de connexion
@@ -65,13 +74,19 @@ socketServer.on('connection', function (socket) {
   //deconnexion
   socket.on('disconnect', () => {
     var serviceMessage = {
-      text:  registeredSockets.nickname + " left the discussion."
+      text:  registeredSockets.nickname + " left the discussion.",
+      name : registeredSockets.nickname
     };
-    socket.broadcast.emit('<service-message', serviceMessage);
+     // Suppression de la liste des connectés
+     var userIndex = users.indexOf(registeredSockets.nickname);
+     if (userIndex !== -1) {
+       users.splice(userIndex, 1);
+     }
     delete registeredSockets.nickname;
+    socket.broadcast.emit('<service-message', serviceMessage);
+    
   });
 
-  //affichage des utilisateurs
 
   });
 
@@ -82,7 +97,7 @@ socketServer.on('connection', function (socket) {
         if(registeredSockets[i] == nickname){
             bool = false;
             break;  
-        }
+        }   
     }
     return bool;
   }
@@ -90,5 +105,3 @@ socketServer.on('connection', function (socket) {
 
 
 });
-
-
